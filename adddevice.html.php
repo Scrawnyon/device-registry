@@ -13,6 +13,8 @@
             <table class="table table-striped">
                 <thead class="thead" align="center"><tr><th colspan="2">Add a device:</th></tr></thead>
                 <form action="?" method="post">
+                    <input type="hidden" name="adddevice"> <!-- POST this to indicate we're returnign from the add device menu -->
+                    
                     <tr><th>Device name: </th><th><input id="devicename" type="text" name="devicename" /></th></tr>
                     <tr><th>Device brand: </th><th><input type="text" name="devicebrand" /></th></tr>
                     <tr><th>Device model: </th><th><input type="text" name="devicemodel" /></th></tr>

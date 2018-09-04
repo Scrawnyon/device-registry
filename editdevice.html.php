@@ -11,19 +11,25 @@
         </nav>
         <div  id="editdeviceinfo">
             <table class="table table-striped">
-                <thead class="thead" align="center"><tr><th colspan="2">Add a device:</th></tr></thead>
-                <form action="?editdevice" method="post">
-                    <?php echo "test"; ?>
-                    <?php echo $device["devicename"]; ?>
-                    <?php echo htmlspecialchars($device["devicename"], ENT_QUOTES, "UTF-8"); ?>
+                <thead class="thead" align="center"><tr><th colspan="2">Edit device:</th></tr></thead>
+                <form action="?" method="post">
+                    <input type="hidden" name="id" value="<?php echo $device["id"] ?>"> <!-- Used to identify whic device we're editing -->
+                    <input type="hidden" name="editdevice"><!-- POST this to indicate we're returnign from the edit device menu -->
+
                     <tr><th>Device name: </th><th><input id="devicename" type="text" name="devicename" value="<?php echo htmlspecialchars($device["devicename"], ENT_QUOTES, "UTF-8"); ?>" /></th></tr>
-                    <tr><th>Device brand: </th><th><input type="text" name="devicebrand" /></th></tr>
-                    <tr><th>Device model: </th><th><input type="text" name="devicemodel" /></th></tr>
-                    <tr><th>Device serialnum: </th><th><input type="text" name="deviceserialnum" /></th></tr>
-                    <tr><th>Device warrantyinfo: </th><th><input type="textfield" name="devicewarrantyinfo" /></th></tr>
-                    <tr><th colspan="2"><button type="submit" class="btn btn-light">Submit</button></th></tr>
+                    <tr><th>Device brand: </th><th><input type="text" name="devicebrand" value="<?php echo htmlspecialchars($device["brand"], ENT_QUOTES, "UTF-8"); ?>" /></th></tr>
+                    <tr><th>Device model: </th><th><input type="text" name="devicemodel" value="<?php echo htmlspecialchars($device["model"], ENT_QUOTES, "UTF-8"); ?>" /></th></tr>
+                    <tr><th>Device serialnum: </th><th><input type="text" name="deviceserialnum" value="<?php echo htmlspecialchars($device["serialnum"], ENT_QUOTES, "UTF-8"); ?>" /></th></tr>
+                    <tr><th>Device warrantyinfo: </th><th><input type="textfield" name="devicewarrantyinfo" value="<?php echo htmlspecialchars($device["warrantyinfo"], ENT_QUOTES, "UTF-8"); ?>" /></th></tr>
+                    <tr><th colspan="2"><button type="submit" class="btn btn-light">Save</button></th></tr>
                 </form>
             </table>
+            <form action="?" method="post">
+                <input type="hidden" name="id" value="<?php echo $device["id"] ?>"> <!-- Used to identify whic device we're editing -->
+                <input type="hidden" name="deletedevice"><!-- POST this to indicate we're returnign from the edit device menu -->
+                
+                <button type="submit" class="btn btn-light">Delete device</button>
+            </form>
         </div>
     </body>
 </html>

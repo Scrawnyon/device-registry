@@ -1,7 +1,7 @@
 <?php
     /* Controller script. Parses GET and POST information and includes the related page */
 
-    // If "adddevice" variable exists, we pushed the add device button
+    // If "adddevice" variable was given as GET (not POST), we pushed the add device button
     if (isset($_GET["adddevice"]))
     {
         include "adddevice.html.php";
@@ -33,9 +33,9 @@
         exit();
     }
     
-    // If "device" variable was given as post, we're returning from the "add device" form.
+    // If "adddevice" variable was given as POST (not GET), we're returning from the "add device" form.
     // Insert new device into database and reload the results page
-    if (isset($_POST["devicename"]))
+    if (isset($_POST["adddevice"]))
     {
         $devicename = $_POST["devicename"];
         $devicebrand = $_POST["devicebrand"];
@@ -62,27 +62,78 @@
         exit();
     }
 
-    // If "editdevice" variable exists, we pushed the edit device button
+    // If "editdevice" variable was given as GET (not POST), we pushed the edit device button
     if (isset($_GET["editdevice"]))
     {
         $id = $_POST["id"];
-
+        
         // mysqli_real_escape_string for mysqli injection safety (?)
-        $query = mysqli_real_escape_string($connection, "SELECT * FROM deviceregistry WHERE id='".$id."';");
+        $query = mysqli_real_escape_string($connection, "SELECT * FROM deviceregistry WHERE id=".$id.";");
         $query = stripslashes($query);
-        $device = mysqli_query($connection, $query);
-        if (!$device)
+        $result = mysqli_query($connection, $query);
+        
+        if (!$result)
         {
             $error = "Error getting device info from database; ".mysqli_error($connection).". Query: ".$query;
             include "error.html.php";
             exit();
         }
 
-        echo "EDITING DEVICE";
-        echo "testing".$device;
-        exit();
+        $device = mysqli_fetch_array($result);
         
         include "editdevice.html.php";
+        exit();
+    }
+
+    // If "editdevice" variable was given as POST (not GET), we're returning from the edit device menu
+    if (isset($_POST["editdevice"]))
+    {
+        $devicename = $_POST["devicename"];
+        $devicebrand = $_POST["devicebrand"];
+        $devicemodel = $_POST["devicemodel"];
+        $deviceserialnum = $_POST["deviceserialnum"];
+        $devicewarrantyinfo = $_POST["devicewarrantyinfo"];
+
+        $id = $_POST["id"];
+        
+        // mysqli_real_escape_string for mysqli injection safety
+        $query = mysqli_real_escape_string($connection, 
+            "UPDATE deviceregistry SET devicename='".$devicename."', brand='".$devicebrand."', model='".$devicemodel."', serialnum='".$deviceserialnum."', warrantyinfo='".$devicewarrantyinfo."', dateadded=".$dateadded." WHERE id=".$id.";");
+        
+        $query = stripslashes($query);
+        if (!mysqli_query($connection, $query))
+        {
+            $error = "Error editing device in database; ".mysqli_error($connection).". Query: ".$query;
+            include "error.html.php";
+            exit();
+        }
+        
+        // Set location to current directory to reload the page from the controller, rather than
+        // the "edit device" form
+        header("Location: .");
+        exit();
+    }
+
+    // If "deletedevice" variable was given as POST (not GET), we're returning from the edit device menu and want to delete the device
+    if (isset($_POST["deletedevice"]))
+    {
+        $id = $_POST["id"];
+        
+        // mysqli_real_escape_string for mysqli injection safety
+        $query = mysqli_real_escape_string($connection, 
+            "DELETE FROM deviceregistry WHERE id='".$id."';");
+        $query = stripslashes($query);
+
+        if (!mysqli_query($connection, $query))
+        {
+            $error = "Error deleting device from database; ".mysqli_error($connection).". Query: ".$query;
+            include "error.html.php";
+            exit();
+        }
+
+        // Set location to current directory to reload the page from the controller, rather than
+        // the "edit device" form
+        header("Location: .");
         exit();
     }
     
@@ -95,6 +146,5 @@
         exit();
     }
     
-    $output = "Connection established";
     include "results.html.php";
 ?>

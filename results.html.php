@@ -11,28 +11,30 @@
         </nav>
         <div id="devices-container">
             <table class="table table-striped table-sm">
-                <!--<thead><tr><th colspan="5">Devices:</th></tr></thead>-->
                 <thead>
                     <tr>
-                        <p><th>devicename</th></p>
-                        <p><th>brand</th></p>
-                        <p><th>model</th></p>
-                        <p><th>serialnum</th></p>
-                        <p><th>warranty</th></p>
-                        <p><th>dateadded</th></p>
+                        <th colspan="7"><p>Devices:</p></th>
+                    </tr>
+                    <tr>
+                        <p><th>Name</th></p>
+                        <p><th>Brand</th></p>
+                        <p><th>Model</th></p>
+                        <p><th>Serial#</th></p>
+                        <p><th>Warranty info</th></p>
+                        <p><th>Date added</th></p>
+                        <p><th></th></p>
                     </tr>
                 </thead>
                 <?php foreach($result as $device): ?>
                     <form action="?editdevice" method="post">
                         <input type="hidden" name="id" value="<?php echo $device["id"] ?>">
                         <tr>
-                            <!--<th><?php echo htmlspecialchars($device["id"], ENT_QUOTES, "UTF-8"); ?></th>-->
                             <th><?php echo htmlspecialchars($device["devicename"], ENT_QUOTES, "UTF-8"); ?></th>
                             <th><?php echo htmlspecialchars($device["brand"], ENT_QUOTES, "UTF-8"); ?></th>
                             <th><?php echo htmlspecialchars($device["model"], ENT_QUOTES, "UTF-8"); ?></th>
                             <th><?php echo htmlspecialchars($device["serialnum"], ENT_QUOTES, "UTF-8"); ?></th>
                             <th><?php echo htmlspecialchars($device["warrantyinfo"], ENT_QUOTES, "UTF-8"); ?></th>
-                            <th><?php echo htmlspecialchars($device["dateadded"], ENT_QUOTES, "UTF-8"); ?></th>
+                            <th><?php echo substr(htmlspecialchars($device["dateadded"], ENT_QUOTES, "UTF-8"), 0, 10); ?></th>
                             <th><input class="edit-button" type="submit" value="Edit" /></th>
                         </tr>
                     </form>
