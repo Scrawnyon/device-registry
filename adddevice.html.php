@@ -14,13 +14,13 @@
                 <thead class="thead" align="center"><tr><th colspan="2">Add a device:</th></tr></thead>
                 <form action="?" method="post">
                     <input type="hidden" name="adddevice"> <!-- POST this to indicate we're returnign from the add device menu -->
-                    
-                    <tr><th>Device name: </th><th><input id="devicename" type="text" name="devicename" /></th></tr>
-                    <tr><th>Device brand: </th><th><input type="text" name="devicebrand" /></th></tr>
-                    <tr><th>Device model: </th><th><input type="text" name="devicemodel" /></th></tr>
-                    <tr><th>Device serialnum: </th><th><input type="text" name="deviceserialnum" /></th></tr>
+
+                    <tr><th>Device name: </th><th><input id="devicename" type="text" name="devicename" required /></th></tr>
+                    <tr><th>Device brand: </th><th><input type="text" name="devicebrand" required /></th></tr>
+                    <tr><th>Device model: </th><th><input type="text" name="devicemodel" required /></th></tr>
+                    <tr><th>Device serialnum: </th><th><input type="text" name="deviceserialnum" required /></th></tr>
                     <tr><th>Device warrantyinfo: </th><th><input type="textfield" name="devicewarrantyinfo" /></th></tr>
-                    <tr><th colspan="2"><button type="submit" class="btn btn-light">Submit</button></th></tr>
+                    <tr><th colspan="2"><button type="submit" class="btn btn-success">Submit</button></th></tr>
                 </form>
             </table>
         </div>

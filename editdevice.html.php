@@ -21,15 +21,16 @@
                     <tr><th>Device model: </th><th><input type="text" name="devicemodel" value="<?php echo htmlspecialchars($device["model"], ENT_QUOTES, "UTF-8"); ?>" /></th></tr>
                     <tr><th>Device serialnum: </th><th><input type="text" name="deviceserialnum" value="<?php echo htmlspecialchars($device["serialnum"], ENT_QUOTES, "UTF-8"); ?>" /></th></tr>
                     <tr><th>Device warrantyinfo: </th><th><input type="textfield" name="devicewarrantyinfo" value="<?php echo htmlspecialchars($device["warrantyinfo"], ENT_QUOTES, "UTF-8"); ?>" /></th></tr>
-                    <tr><th colspan="2"><button type="submit" class="btn btn-light">Save</button></th></tr>
+                    <tr><th colspan="2"><button type="submit" class="btn btn-success">Save</button></th></tr>
                 </form>
+                <tr><th colspan="2">
+                    <form action="?" method="post">
+                        <input type="hidden" name="id" value="<?php echo $device["id"] ?>"> <!-- Used to identify whic device we're editing -->
+                        <input type="hidden" name="deletedevice"><!-- POST this to indicate we're returnign from the edit device menu -->
+                        <button type="submit" class="btn btn-danger" id="delete-button">Delete device</button>
+                    </form>
+                </th></tr>
             </table>
-            <form action="?" method="post">
-                <input type="hidden" name="id" value="<?php echo $device["id"] ?>"> <!-- Used to identify whic device we're editing -->
-                <input type="hidden" name="deletedevice"><!-- POST this to indicate we're returnign from the edit device menu -->
-                
-                <button type="submit" class="btn btn-light">Delete device</button>
-            </form>
         </div>
     </body>
 </html>
