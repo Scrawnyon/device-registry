@@ -5,7 +5,7 @@
     </head>
     <body>
         <nav class="navbar navbar-light bg-light navbar-expand-lg">
-            <a class="navbar-brand">Navbar</a>
+            <a class="navbar-brand">Device registry</a>
             <a class="nav-item btn btn-light" href="?adddevice">Add a device</a>
             <a class="nav-item btn btn-light" href=".">Device list</a>
         </nav>

@@ -98,7 +98,7 @@
         
         // mysqli_real_escape_string for mysqli injection safety
         $query = mysqli_real_escape_string($connection, 
-            "UPDATE deviceregistry SET devicename='".$devicename."', brand='".$devicebrand."', model='".$devicemodel."', serialnum='".$deviceserialnum."', warrantyinfo='".$devicewarrantyinfo."', dateadded=".$dateadded." WHERE id=".$id.";");
+            "UPDATE deviceregistry SET devicename='".$devicename."', brand='".$devicebrand."', model='".$devicemodel."', serialnum='".$deviceserialnum."', warrantyinfo='".$devicewarrantyinfo."' WHERE id=".$id.";");
         
         $query = stripslashes($query);
         if (!mysqli_query($connection, $query))
