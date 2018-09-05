@@ -1,6 +1,6 @@
 <?php
     /* Controller script. Parses GET and POST information and includes the related page */
-
+    error_reporting(-1);
     // If "adddevice" variable was given as GET (not POST), we pushed the add device button
     if (isset($_GET["adddevice"]))
     {
@@ -133,7 +133,7 @@
 
         if (!mysqli_query($connection, $query))
         {
-            $error = "Error deleting device from database; ".mysqli_error($connection).". Query: ".$query;
+            $error = "Error $searchdeleting device from database; ".mysqli_error($connection).". Query: ".$query;
             include "error.html.php";
             exit();
         }
@@ -149,6 +149,7 @@
     {
         if (isset($_POST["devicename"]))
         {
+            echo "SORTING BY NAME";
             $sortby = "devicename";
         }
         else if (isset($_POST["brand"]))
@@ -177,29 +178,23 @@
         $sortby = "dateadded";
     }
 
-    // Load devices from database
     // If "search" variable was given as POST (not GET), we're returning from the search menu
-    if (isset($_POST["search"]))
+    if (!empty($_POST["searchstring"]))
     {
-        $search = mysqli_real_escape_string($_POST["searchstring"]);
-        $search = stripslashes($search);
-        echo "RETURNING FROM SEARCH: ".$search;
-        $query = "SELECT * FROM deviceregistry WHERE 
-            devicename LIKE %".$search."% OR 
-            brand LIKE %".$search."% OR 
-            model LIKE %".$search."% OR 
-            serialnum LIKE %".$search."% OR 
-            warrantyinfo LIKE %".$search."% OR 
-            dateadded LIKE %".$search."%;";
+        $search = $_POST["searchstring"];
+        $query = "SELECT * FROM deviceregistry WHERE  devicename LIKE '%".$search."%' OR  brand LIKE '%".$search."%' OR  model LIKE '%".$search."%' OR  serialnum LIKE '%".$search."%' OR warrantyinfo LIKE '%".$search."%' OR dateadded LIKE '%".$search."%' ORDER BY ".$sortby.";";
     }
     else
     {
         $query = "SELECT * FROM deviceregistry ORDER BY ".$sortby.";";
     }
-    echo "PAST SEARCH QUERY";
+
+    $query = mysqli_real_escape_string($connection, $query);
     $query = stripslashes($query);
+
+    // Load devices from database
     $result = mysqli_query($connection, $query);  
-    if (!$result)  
+    if (!$result)
     {  
         $error = "Error querying database: " . mysqli_error($connection);
         include "error.html.php";

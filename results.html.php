@@ -18,7 +18,10 @@
                     </tr>
                     <tr>
                         <form action="?" method="post">
-                            <input type="hidden" name="sorting" />
+                            <input type="hidden" name="sorting" /> <!-- POST this to activate sorting on reload -->
+                            <input type="hidden" name="search" value="<?php $_POST["search"]; ?>" /> <!-- Store search and searchstring variables when sorting -->
+                            <input type="hidden" name="searchstring" value="<?php echo $_POST["searchstring"]; ?>" />
+
                             <th><input class="edit-button" type="submit" name="devicename" value="Name" /></th>
                             <th><input class="edit-button" type="submit" name="brand" value="Brand" /></th>
                             <th><input class="edit-button" type="submit" name="model" value="Model" /></th>
