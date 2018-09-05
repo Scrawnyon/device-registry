@@ -8,6 +8,13 @@
         exit();
     }
 
+    // If "search" variable was given as GET (not POST), we pushed the search button
+    if (isset($_GET["search"]))
+    {
+        include "search.html.php";
+        exit();
+    }
+
     // Establish connection to database
     $connection = mysqli_connect("34.246.32.28", "kujala", "j5QzLMCU");
     if (!$connection) 
@@ -171,7 +178,25 @@
     }
 
     // Load devices from database
-    $query = "SELECT * FROM deviceregistry ORDER BY ".$sortby.";";
+    // If "search" variable was given as POST (not GET), we're returning from the search menu
+    if (isset($_POST["search"]))
+    {
+        $search = mysqli_real_escape_string($_POST["searchstring"]);
+        $search = stripslashes($search);
+        echo "RETURNING FROM SEARCH: ".$search;
+        $query = "SELECT * FROM deviceregistry WHERE 
+            devicename LIKE %".$search."% OR 
+            brand LIKE %".$search."% OR 
+            model LIKE %".$search."% OR 
+            serialnum LIKE %".$search."% OR 
+            warrantyinfo LIKE %".$search."% OR 
+            dateadded LIKE %".$search."%;";
+    }
+    else
+    {
+        $query = "SELECT * FROM deviceregistry ORDER BY ".$sortby.";";
+    }
+    echo "PAST SEARCH QUERY";
     $query = stripslashes($query);
     $result = mysqli_query($connection, $query);  
     if (!$result)  

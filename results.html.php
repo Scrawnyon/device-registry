@@ -7,23 +7,24 @@
         <nav class="navbar navbar-light bg-light navbar-expand-lg">
             <a class="navbar-brand">Device registry</a>
             <a class="nav-item btn btn-light" href="?adddevice">Add a device</a>
+            <a class="nav-item btn btn-light" href="?search">Search</a>
             <a class="nav-item btn btn-light" href=".">Device list</a>
         </nav>
         <div id="devices-container">
             <table class="table table-striped table-sm">
                 <thead>
                     <tr>
-                        <th colspan="7"><p>Devices:</p></th>
+                        <th colspan="7">Devices:</th>
                     </tr>
                     <tr>
                         <form action="?" method="post">
                             <input type="hidden" name="sorting" />
-                            <th><input type="submit" name="devicename" value="Name" /></th>
-                            <th><input type="submit" name="brand" value="Brand" /></th>
-                            <th><input type="submit" name="model" value="Model" /></th>
-                            <th><input type="submit" name="serialnum" value="Serial#" /></th>
-                            <th><input type="submit" name="warrantyinfo" value="Warranty info" /></th>
-                            <th><input type="submit" name="dateadded" value="Date added" /></th>
+                            <th><input class="edit-button" type="submit" name="devicename" value="Name" /></th>
+                            <th><input class="edit-button" type="submit" name="brand" value="Brand" /></th>
+                            <th><input class="edit-button" type="submit" name="model" value="Model" /></th>
+                            <th><input class="edit-button" type="submit" name="serialnum" value="Serial#" /></th>
+                            <th><input class="edit-button" type="submit" name="warrantyinfo" value="Warranty info" /></th>
+                            <th><input class="edit-button" type="submit" name="dateadded" value="Date added" /></th>
                             <p><th></th></p>
                         </form>
                     </tr>
