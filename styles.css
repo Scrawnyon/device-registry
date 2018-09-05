@@ -6,7 +6,7 @@
 }
 
 #devices-container table {
-    width: 500px;
+    width: 40%;
     margin: auto;
     margin-top: 80px;
     box-shadow: 0px 0px 3px 3px rgb(224, 224, 224);
@@ -17,7 +17,6 @@
 }
 
 #editdeviceinfo table {
-    width: 200px;
     margin: auto;
     margin-top: 80px;
     box-shadow: 0px 0px 3px 3px rgb(224, 224, 224);
