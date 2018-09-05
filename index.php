@@ -137,8 +137,43 @@
         exit();
     }
     
+    // Check sorting
+    if (isset($_POST["sorting"]))
+    {
+        if (isset($_POST["devicename"]))
+        {
+            $sortby = "devicename";
+        }
+        else if (isset($_POST["brand"]))
+        {
+            $sortby = "brand";
+        }
+        else if (isset($_POST["model"]))
+        {
+            $sortby = "model";
+        }
+        else if (isset($_POST["serialnum"]))
+        {
+            $sortby = "serialnum";
+        }
+        else if (isset($_POST["warrantyinfo"]))
+        {
+            $sortby = "warrantyinfo";
+        }
+        else if (isset($_POST["dateadded"]))
+        {
+            $sortby = "dateadded";
+        }
+    }
+    else
+    {
+        $sortby = "dateadded";
+    }
+
     // Load devices from database
-    $result = mysqli_query($connection, "SELECT * FROM deviceregistry");  
+    $query = "SELECT * FROM deviceregistry ORDER BY ".$sortby.";";
+    $query = stripslashes($query);
+    $result = mysqli_query($connection, $query);  
     if (!$result)  
     {  
         $error = "Error querying database: " . mysqli_error($connection);

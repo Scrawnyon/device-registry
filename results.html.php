@@ -16,13 +16,16 @@
                         <th colspan="7"><p>Devices:</p></th>
                     </tr>
                     <tr>
-                        <p><th>Name</th></p>
-                        <p><th>Brand</th></p>
-                        <p><th>Model</th></p>
-                        <p><th>Serial#</th></p>
-                        <p><th>Warranty info</th></p>
-                        <p><th>Date added</th></p>
-                        <p><th></th></p>
+                        <form action="?" method="post">
+                            <input type="hidden" name="sorting" />
+                            <th><input type="submit" name="devicename" value="Name" /></th>
+                            <th><input type="submit" name="brand" value="Brand" /></th>
+                            <th><input type="submit" name="model" value="Model" /></th>
+                            <th><input type="submit" name="serialnum" value="Serial#" /></th>
+                            <th><input type="submit" name="warrantyinfo" value="Warranty info" /></th>
+                            <th><input type="submit" name="dateadded" value="Date added" /></th>
+                            <p><th></th></p>
+                        </form>
                     </tr>
                 </thead>
                 <?php foreach($result as $device): ?>
