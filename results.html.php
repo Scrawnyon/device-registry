@@ -8,6 +8,7 @@
             <a class="navbar-brand">Device registry</a>
             <a class="nav-item btn btn-light" href=".">Device list</a>
             <a class="nav-item btn btn-light" href="?adddevice">Add a device</a>
+            <a class="nav-item btn btn-light" href="?adduserorlocation">Add user/location</a>
             <a class="nav-item btn btn-light" href="?search">Search</a>
         </nav>
         <div id="devices-container">

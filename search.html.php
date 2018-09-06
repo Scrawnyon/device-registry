@@ -6,9 +6,10 @@
     <body>
         <nav class="navbar navbar-light bg-light navbar-expand-lg">
             <a class="navbar-brand">Device registry</a>
-            <a class="nav-item btn btn-light" href="?adddevice">Add a device</a>
-            <a class="nav-item btn btn-light" href="?search">Search</a>
             <a class="nav-item btn btn-light" href=".">Device list</a>
+            <a class="nav-item btn btn-light" href="?adddevice">Add a device</a>
+            <a class="nav-item btn btn-light" href="?adduserorlocation">Add user/location</a>
+            <a class="nav-item btn btn-light" href="?search">Search</a>
         </nav>
         <div id="search-container">
             <table class="table table-striped table-sm">
@@ -17,7 +18,7 @@
                 </thead>
                 <form action="?" method="post">
                     <input type="hidden" name="search">
-                    <tr><th><p align="center"><input type="text" name="searchstring" placeholder="Name, brand, date etc." width="90%"/></p></th></tr>
+                    <tr><th><p align="center"><input type="text" name="searchstring" placeholder="Name, brand, model, serial number, warranty or date" width="90%"/></p></th></tr>
                     <tr><th><p align="center"><input type="submit" class="btn btn-light" value="Search" /></p></th></tr>
                 </form>
             </table>

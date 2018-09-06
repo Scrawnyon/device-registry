@@ -2,6 +2,7 @@
     /* Controller script. Parses GET and POST information and includes the related page */
     error_reporting(-1);
     ini_set('display_errors',1);
+
     // If "adddevice" variable was given as GET (not POST), we pushed the add device button
     if (isset($_GET["adddevice"]))
     {
@@ -40,9 +41,19 @@
         include "error.html.php";
         exit();
     }
+
+    // If "adddevice" variable was given as GET (not POST), we pushed the add device button
+    if (isset($_GET["adduserorlocation"]))
+    {
+        $query = "SELECT username FROM users";
+        $users = mysqli_query($connection, $query);
+        $query = "SELECT locationname FROM locations";
+        $locations = mysqli_query($connection, $query);
+        include "adduserorlocation.html.php";
+        exit();
+    }
     
-    // If "adddevice" variable was given as POST (not GET), we're returning from the "add device" form.
-    // Insert new device into database and reload the results page
+    // If "adddevice" variable was given as POST (not GET), we're returning from the "add device" form
     if (isset($_POST["adddevice"]))
     {
         $devicename = $_POST["devicename"];
@@ -258,6 +269,42 @@
 
         // Set location to current directory to reload the page from the controller, rather than
         // the "edit device" form
+        header("Location: .");
+        exit();
+    }
+
+    // If "adddevice" variable was given as POST (not GET), we're returning from the "add device" form.
+    // Insert new device into database and reload the results page
+    if (isset($_POST["adduserorlocation"]))
+    {
+        // If owner and/or location was given, add them here
+        $username = $_POST["username"];
+        if ($username != "")
+        {
+            // Look for users with the given username
+            $query = "INSERT INTO users (username) VALUES ('".$username."');";
+            if (!mysqli_query($connection, $query))
+            {
+                $error = "Error adding user to database: ".mysqli_error($connection).". Query: ".$query;
+                include "error.html.php";
+                exit();
+            }
+        }
+        
+        $location = $_POST["location"];
+        if ($location != "")
+        {
+            $query = "INSERT INTO locations (locationname) VALUES ('".$location."';";
+            if (!mysqli_query($connection, $query))
+            {
+                $error = "Error adding location to database: ".mysqli_error($connection).". Query: ".$query;
+                include "error.html.php";
+                exit();
+            }
+        }
+
+        // Set location to current directory to reload the page from the controller, rather than
+        // the "add user or location" form
         header("Location: .");
         exit();
     }
