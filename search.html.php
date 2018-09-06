@@ -10,15 +10,15 @@
             <a class="nav-item btn btn-light" href="?search">Search</a>
             <a class="nav-item btn btn-light" href=".">Device list</a>
         </nav>
-        <div id="devices-container">
+        <div id="search-container">
             <table class="table table-striped table-sm">
                 <thead>
-                    <tr><th>Search:</th></tr>
+                    <tr><th><p align="center">Search:</p></th></tr>
                 </thead>
                 <form action="?" method="post">
                     <input type="hidden" name="search">
-                    <tr><th><input type="text" name="searchstring" placeholder="Name, brand, date etc." /></th></tr>
-                    <tr><th><input type="submit" class="btn btn-light" value="Search" /></th></tr>
+                    <tr><th><p align="center"><input type="text" name="searchstring" placeholder="Name, brand, date etc." width="90%"/></p></th></tr>
+                    <tr><th><p align="center"><input type="submit" class="btn btn-light" value="Search" /></p></th></tr>
                 </form>
             </table>
         </div>
