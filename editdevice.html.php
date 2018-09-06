@@ -21,6 +21,8 @@
                     <tr><th>Device model: </th><th><input type="text" name="devicemodel" value="<?php echo htmlspecialchars($device["model"], ENT_QUOTES, "UTF-8"); ?>" /></th></tr>
                     <tr><th>Device serialnum: </th><th><input type="text" name="deviceserialnum" value="<?php echo htmlspecialchars($device["serialnum"], ENT_QUOTES, "UTF-8"); ?>" /></th></tr>
                     <tr><th>Device warrantyinfo: </th><th><input type="textfield" name="devicewarrantyinfo" value="<?php echo htmlspecialchars($device["warrantyinfo"], ENT_QUOTES, "UTF-8"); ?>" /></th></tr>
+                    <tr><th>Owner: </th><th><input type="textfield" name="deviceowner" value="<?php echo htmlspecialchars($device["username"], ENT_QUOTES, "UTF-8"); ?>"/></th></tr>
+                    <tr><th>Location: </th><th><input type="textfield" name="devicelocation" value="<?php echo htmlspecialchars($device["locationname"], ENT_QUOTES, "UTF-8"); ?>"/></th></tr>
                     <tr><th colspan="2"><button type="submit" class="btn btn-success">Save</button></th></tr>
                 </form>
                 <tr><th colspan="2">

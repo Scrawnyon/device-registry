@@ -1,6 +1,7 @@
 <?php
     /* Controller script. Parses GET and POST information and includes the related page */
     error_reporting(-1);
+    ini_set('display_errors',1);
     // If "adddevice" variable was given as GET (not POST), we pushed the add device button
     if (isset($_GET["adddevice"]))
     {
@@ -63,6 +64,64 @@
             exit();
         }
 
+        // If owner and/or location was given, add them here
+        $username = $_POST["deviceowner"];
+        if ($username != "")
+        {
+            // Look for users with the given username
+            $query = "SELECT id FROM users WHERE username='".$username."';";
+            if ($founduser = mysqli_query($connection, $query))
+            {
+                $row = mysqli_fetch_array($founduser);
+                if ($row == null)
+                {
+                    $error = "Error setting user for device (user not found): ".mysqli_error($connection).". Query: ".$query;
+                    include "error.html.php";
+                    exit();
+                }
+
+                // If user was found, get the user's ID
+                $id = $row['id'];
+
+                // Set the device's owner as the given user
+                $query = "UPDATE deviceregistry SET owner='".$id."' WHERE serialnum='".$deviceserialnum."';";
+                if (!mysqli_query($connection, $query))
+                {
+                    $error = "Error setting user for device: ".mysqli_error($connection).". Query: ".$query;
+                    include "error.html.php";
+                    exit();
+                }
+            }
+        }
+        
+        $location = $_POST["devicelocation"];
+        if ($location != "")
+        {
+            $query = "SELECT id FROM locations WHERE locationname='".$location."';";
+            if ($foundlocation = mysqli_query($connection, $query))
+            {
+                $row = mysqli_fetch_array($foundlocation);
+                if ($row == null)
+                {
+                    $error = "Error setting location for device (location not found): ".mysqli_error($connection).". Query: ".$query;
+                    include "error.html.php";
+                    exit();
+                }
+
+                // If user was found, get the user's ID
+                $id = $row['id'];
+
+                // Set the device's owner as the given user
+                $query = "UPDATE deviceregistry SET location='".$id."' WHERE serialnum='".$deviceserialnum."';";
+                if (!mysqli_query($connection, $query))
+                {
+                    $error = "Error setting location for device: ".mysqli_error($connection).". Query: ".$query;
+                    include "error.html.php";
+                    exit();
+                }
+            }
+        }
+
         // Set location to current directory to reload the page from the controller, rather than
         // the "add device" form
         header("Location: .");
@@ -76,6 +135,7 @@
         
         // mysqli_real_escape_string for mysqli injection safety (?)
         $query = mysqli_real_escape_string($connection, "SELECT * FROM deviceregistry WHERE id=".$id.";");
+        $query = mysqli_real_escape_string($connection, "SELECT a.id, a.devicename, a.brand, a.model, a.serialnum, a.warrantyinfo, a.dateadded, b.username, c.locationname FROM deviceregistry a LEFT JOIN users b ON b.id=a.owner LEFT JOIN locations c ON c.id=a.location WHERE a.id=".$id.";");
         $query = stripslashes($query);
         $result = mysqli_query($connection, $query);
         
@@ -114,6 +174,64 @@
             include "error.html.php";
             exit();
         }
+
+        // If owner and/or location was given, add them here
+        $username = $_POST["deviceowner"];
+        if ($username != "")
+        {
+            // Look for users with the given username
+            $query = "SELECT id FROM users WHERE username='".$username."';";
+            if ($founduser = mysqli_query($connection, $query))
+            {
+                $row = mysqli_fetch_array($founduser);
+                if ($row == null)
+                {
+                    $error = "Error setting user for device (user not found): ".mysqli_error($connection).". Query: ".$query;
+                    include "error.html.php";
+                    exit();
+                }
+
+                // If user was found, get the user's ID
+                $id = $row['id'];
+
+                // Set the device's owner as the given user
+                $query = "UPDATE deviceregistry SET owner='".$id."' WHERE serialnum='".$deviceserialnum."';";
+                if (!mysqli_query($connection, $query))
+                {
+                    $error = "Error setting user for device: ".mysqli_error($connection).". Query: ".$query;
+                    include "error.html.php";
+                    exit();
+                }
+            }
+        }
+        
+        $location = $_POST["devicelocation"];
+        if ($location != "")
+        {
+            $query = "SELECT id FROM locations WHERE locationname='".$location."';";
+            if ($foundlocation = mysqli_query($connection, $query))
+            {
+                $row = mysqli_fetch_array($foundlocation);
+                if ($row == null)
+                {
+                    $error = "Error setting location for device (location not found): ".mysqli_error($connection).". Query: ".$query;
+                    include "error.html.php";
+                    exit();
+                }
+
+                // If user was found, get the user's ID
+                $id = $row['id'];
+
+                // Set the device's owner as the given user
+                $query = "UPDATE deviceregistry SET location='".$id."' WHERE serialnum='".$deviceserialnum."';";
+                if (!mysqli_query($connection, $query))
+                {
+                    $error = "Error setting location for device: ".mysqli_error($connection).". Query: ".$query;
+                    include "error.html.php";
+                    exit();
+                }
+            }
+        }
         
         // Set location to current directory to reload the page from the controller, rather than
         // the "edit device" form
@@ -149,7 +267,6 @@
     {
         if (isset($_POST["devicename"]))
         {
-            echo "SORTING BY NAME";
             $sortby = "devicename";
         }
         else if (isset($_POST["brand"]))
@@ -182,13 +299,14 @@
     if (!empty($_POST["searchstring"]))
     {
         $search = $_POST["searchstring"];
-        $query = "SELECT * FROM deviceregistry WHERE  devicename LIKE '%".$search."%' OR  brand LIKE '%".$search."%' OR  model LIKE '%".$search."%' OR  serialnum LIKE '%".$search."%' OR warrantyinfo LIKE '%".$search."%' OR dateadded LIKE '%".$search."%' ORDER BY ".$sortby.";";
+        $query = "SELECT a.id, a.devicename, a.brand, a.model, a.serialnum, a.warrantyinfo, a.dateadded, b.username, c.locationname FROM deviceregistry a LEFT JOIN users b ON b.id=a.owner LEFT JOIN locations c ON c.id=a.location WHERE  devicename LIKE '%".$search."%' OR  brand LIKE '%".$search."%' OR  model LIKE '%".$search."%' OR  serialnum LIKE '%".$search."%' OR warrantyinfo LIKE '%".$search."%' OR dateadded LIKE '%".$search."%' ORDER BY ".$sortby.";";
     }
     else
     {
-        $query = "SELECT * FROM deviceregistry ORDER BY ".$sortby.";";
+        // No search variable given, just show all rows
+        $query = "SELECT a.id, a.devicename, a.brand, a.model, a.serialnum, a.warrantyinfo, a.dateadded, b.username, c.locationname FROM deviceregistry a LEFT JOIN users b ON b.id=a.owner LEFT JOIN locations c ON c.id=a.location ORDER BY ".$sortby.";";
     }
-
+    
     $query = mysqli_real_escape_string($connection, $query);
     $query = stripslashes($query);
 

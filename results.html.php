@@ -6,27 +6,29 @@
     <body>
         <nav class="navbar navbar-light bg-light navbar-expand-lg">
             <a class="navbar-brand">Device registry</a>
+            <a class="nav-item btn btn-light" href=".">Device list</a>
             <a class="nav-item btn btn-light" href="?adddevice">Add a device</a>
             <a class="nav-item btn btn-light" href="?search">Search</a>
-            <a class="nav-item btn btn-light" href=".">Device list</a>
         </nav>
         <div id="devices-container">
             <table class="table table-striped table-sm">
                 <thead>
                     <tr>
-                        <th colspan="7">Devices:</th>
+                        <th colspan="9">Devices:</th>
                     </tr>
                     <tr>
                         <form action="?" method="post">
                             <input type="hidden" name="sorting" /> <!-- POST this to activate sorting on reload -->
                             <input type="hidden" name="search" value="<?php $_POST["search"]; ?>" /> <!-- Store search and searchstring variables when sorting -->
-                            <input type="hidden" name="searchstring" value="<?php echo $_POST["searchstring"]; ?>" />
+                            <input type="hidden" name="searchstring" value="<?php if (!empty($_POST['searchstring'])) echo $_POST['searchstring']; ?>" />
 
                             <th><input class="edit-button" type="submit" name="devicename" value="Name" /></th>
                             <th><input class="edit-button" type="submit" name="brand" value="Brand" /></th>
                             <th><input class="edit-button" type="submit" name="model" value="Model" /></th>
                             <th><input class="edit-button" type="submit" name="serialnum" value="Serial#" /></th>
                             <th><input class="edit-button" type="submit" name="warrantyinfo" value="Warranty info" /></th>
+                            <th><input class="edit-button" type="submit" name="username" value="Owner" /></th>
+                            <th><input class="edit-button" type="submit" name="location" value="Location" /></th>
                             <th><input class="edit-button" type="submit" name="dateadded" value="Date added" /></th>
                             <p><th></th></p>
                         </form>
@@ -41,6 +43,8 @@
                             <th><?php echo htmlspecialchars($device["model"], ENT_QUOTES, "UTF-8"); ?></th>
                             <th><?php echo htmlspecialchars($device["serialnum"], ENT_QUOTES, "UTF-8"); ?></th>
                             <th><?php echo htmlspecialchars($device["warrantyinfo"], ENT_QUOTES, "UTF-8"); ?></th>
+                            <th><?php echo htmlspecialchars($device["username"], ENT_QUOTES, "UTF-8"); ?></th>
+                            <th><?php echo htmlspecialchars($device["locationname"], ENT_QUOTES, "UTF-8"); ?></th>
                             <th><?php echo substr(htmlspecialchars($device["dateadded"], ENT_QUOTES, "UTF-8"), 0, 10); ?></th>
                             <th><input class="edit-button" type="submit" value="Edit" /></th>
                         </tr>
